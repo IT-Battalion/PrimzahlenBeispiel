@@ -18,13 +18,13 @@ public class KlasseStartThreads {
         GeneratePrimes gp1 = new GeneratePrimes();
         GeneratePrimes gp2 = new GeneratePrimes();
         GeneratePrimes gp3 = new GeneratePrimes();
-        gp1.run();
-        gp2.run();
-        gp3.run();
+        new Thread(gp1).start();
+        new Thread(gp2).start();
+        new Thread(gp3).start();
         ReadPrimes rp1 = new ReadPrimes();
         ReadPrimes rp2 = new ReadPrimes();
-        rp1.run();
-        rp2.run();
+        new Thread(rp1).start();
+        new Thread(rp2).start();
         Timer t1 = new Timer();
         TimerTask tt = new TimerTask() {
             @Override
