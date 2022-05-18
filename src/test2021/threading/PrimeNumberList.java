@@ -18,13 +18,28 @@ import java.util.List;
 public class PrimeNumberList {
     private static final List<Integer> primes = new ArrayList<>();
 
-    synchronized public static void savePrime(int prime) {
-        if (primes.size() < 15) primes.add(prime);
+    synchronized public void savePrime(int prime) {
+        if (primes.size() < 15) {
+            primes.add(prime);
+            this.notifyAll();
+        } else {
+            try {
+                this.wait();
+            } catch (InterruptedException ignored) {
+            }
+        }
     }
 
-    synchronized public static int getPrime() {
+    synchronized public int getPrime() {
+        if (primes.size() == 0) {
+            try {
+                this.wait();
+            } catch (InterruptedException ignored) {
+            }
+        }
         int oldest = primes.get(0);
         primes.remove(0);
+        this.notifyAll();
         return oldest;
     }
 }

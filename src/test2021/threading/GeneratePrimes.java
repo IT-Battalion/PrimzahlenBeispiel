@@ -1,4 +1,5 @@
 package test2021.threading;
+
 /**
  * Klasse GeneratePrimes:
  * Diese Klasse kann als Thread ausgeführt werden und erzeugt eine zufällige Primzahl mit Hilfe der
@@ -11,9 +12,12 @@ public class GeneratePrimes implements Runnable {
 
     @Override
     public void run() {
+        int prime = GenerateRandomPrime.randomPrime();
+        PrimeNumberList.savePrime(prime);
         while (running) {
-            int prime = GenerateRandomPrime.randomPrime();
-            PrimeNumberList.savePrime(prime);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {}
         }
     }
 
